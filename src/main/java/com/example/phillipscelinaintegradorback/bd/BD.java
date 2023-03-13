@@ -2,38 +2,33 @@ package com.example.phillipscelinaintegradorback.bd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class BD {
-    private final static String DRIVER = "org.h2.Driver";
-    private final static String URL = "jdbc:h2:./Database/PHILLIPS_CELINA_PI";
-    private final static String USER = "root";
-    private final static String PASS = "1234";
+    private final static String DRIVER="org.h2.Driver";
+    private final static String URL="jdbc:h2:./Database/clase15";
+    private final static String USER="root";
+    private final static String PASS="1234";
 
-
-    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+    public static Connection getConnection() throws Exception{
         Class.forName(DRIVER);
         return DriverManager.getConnection(URL,USER,PASS);
-
     }
-
-    public static void crearBD(){
-        Connection connection = null;
-        try {
+    public static void crearTablas(){
+        Connection connection=null;
+        try{
             Class.forName(DRIVER);
-            connection=DriverManager.getConnection(URL+";INIT=RUNSCRIPT FROM 'create.sql'", USER, PASS);
-
-
-        }catch (Exception e){
+            connection=DriverManager.getConnection(URL+";INIT=RUNSCRIPT FROM 'create.sql'",USER,PASS);
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
         finally {
-            try {
+            try{
                 connection.close();
-            }catch (Exception ex){
+            }
+            catch (Exception ex){
                 ex.printStackTrace();
             }
         }
     }
 }
-
