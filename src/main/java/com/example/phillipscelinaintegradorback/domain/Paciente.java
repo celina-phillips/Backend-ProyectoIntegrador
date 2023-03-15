@@ -30,6 +30,9 @@ public class Paciente {
         this.email = email;
     }
 
+    public Paciente() {
+    }
+
     public String getEmail() {
         return email;
     }

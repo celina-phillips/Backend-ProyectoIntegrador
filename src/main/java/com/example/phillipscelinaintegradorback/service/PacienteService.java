@@ -17,5 +17,24 @@ public class PacienteService {
         return pacienteDAOH2.buscarXCriterioString(email);
     }
 
+    public Paciente guardarPaciente(Paciente paciente){
+        return pacienteDAOH2.guardar(paciente);
+    }
+
+    public Paciente buscarPaciente(int id){
+        return pacienteDAOH2.buscar(id);
+    }
+
+    public void eliminarPaciente(int id){
+        pacienteDAOH2.eliminar(id);
+    }
+
+    public Paciente actualizarDomicilio(Paciente paciente){
+        return pacienteDAOH2.actualizar(paciente);
+    }
+
+    public Paciente actualizarPaciente(Paciente paciente){
+        return pacienteDAOH2.actualizar(paciente);
+    }
 
 }

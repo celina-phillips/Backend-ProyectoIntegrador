@@ -22,6 +22,9 @@ public class Domicilio {
         this.provincia = provincia;
     }
 
+    public Domicilio() {
+    }
+
     public int getId() {
         return id;
     }

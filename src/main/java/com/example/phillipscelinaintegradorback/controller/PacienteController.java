@@ -5,10 +5,12 @@ import com.example.phillipscelinaintegradorback.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
+@RequestMapping("/pacientes")
 public class PacienteController {
     private PacienteService pacienteService;
 
@@ -17,12 +19,29 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
-    @GetMapping("/index")
-    public String encontrarPacienteXEmail(Model model, @RequestParam("email") String email){
-        //buscar al paciente con el email y devolver la respuesta
-        Paciente paciente=pacienteService.buscarXEmail(email);
-        model.addAttribute("nombre",paciente.getNombre());
-        model.addAttribute("apellido",paciente.getApellido());
-        return "index";
+    @PostMapping
+    public Paciente registrarPaciente(@RequestBody Paciente paciente){
+        return pacienteService.guardarPaciente(paciente);
     }
+
+    @PutMapping
+    public Paciente actualizarPaciente(@RequestBody Paciente paciente){
+        return pacienteService.actualizarPaciente(paciente);
+    }
+
+    @GetMapping
+    public Paciente buscarPaciente(@RequestBody int id){
+        return pacienteService.buscarPaciente(id);
+    }
+
+    @DeleteMapping
+    public void eliminarPaciente(@RequestParam int id){
+        pacienteService.eliminarPaciente(id);
+    }
+
+    @GetMapping("/buscarTodos")
+    public List<Paciente> buscarTodosPacientes(){
+        return pacienteService.buscarTodosPacientes();
+    }
+
 }
