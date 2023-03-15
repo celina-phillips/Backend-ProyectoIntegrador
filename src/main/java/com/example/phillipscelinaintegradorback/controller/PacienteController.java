@@ -29,8 +29,8 @@ public class PacienteController {
         return pacienteService.actualizarPaciente(paciente);
     }
 
-    @GetMapping
-    public Paciente buscarPaciente(@RequestBody int id){
+    @GetMapping("/{id}")
+    public Paciente buscarPaciente(@PathVariable int id){
         return pacienteService.buscarPaciente(id);
     }
 

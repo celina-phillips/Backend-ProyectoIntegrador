@@ -21,6 +21,9 @@ public class Odontologo {
         this.apellido = apellido;
     }
 
+    public Odontologo() {
+    }
+
     public int getId() {
         return id;
     }

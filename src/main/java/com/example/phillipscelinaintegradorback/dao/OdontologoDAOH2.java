@@ -1,15 +1,10 @@
 package com.example.phillipscelinaintegradorback.dao;
- // falta completar metodo actualizar y eliminar y buscar xcriterio
-// falta crear constante para las queries sql
 
 import com.example.phillipscelinaintegradorback.bd.BD;
 import com.example.phillipscelinaintegradorback.domain.Odontologo;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +26,18 @@ public class OdontologoDAOH2 implements IDao<Odontologo> {
             ps.setString(3, odontologo.getApellido());
 
             ps.execute();
-            logger.debug("Se ha conectado a la base de datos");
+            logger.debug("Conexión a la base de datos exitosa");
 
             ResultSet clave = ps.getGeneratedKeys();
             while (clave.next()){
                 odontologo.setId(clave.getInt(1));
             }
 
-            logger.debug("Se ha guardado el odontólogo con ID: " + odontologo.getId());
+            logger.debug("Se guardo el odontólogo con ID: " + odontologo.getId());
 
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("Se ha generado error con la conexión a la base de datos");
+            logger.error("Error de conexión a la base de datos");
         }finally {
             try {
                 connection.close();
@@ -88,12 +83,50 @@ public class OdontologoDAOH2 implements IDao<Odontologo> {
 
     @Override
     public void eliminar(int id) {
-
+        Connection connection=null;
+        try{
+            connection= BD.getConnection();
+            PreparedStatement ps= connection.prepareStatement("DELETE FROM ODONTOLOGOS WHERE ID=?");
+            ps.setInt(1,id);
+            ps.execute();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        finally {
+            try{
+                connection.close();
+            }
+            catch (Exception exception){
+                exception.printStackTrace();
+            }
+        }
     }
 
     @Override
     public Odontologo actualizar(Odontologo odontologo) {
-        return null;
+        Connection connection=null;
+        try{
+            connection= BD.getConnection();
+            PreparedStatement ps= connection.prepareStatement("UPDATE ODONTOLOGOS " +
+                    "SET MATRICULA=?, NOMBRE=?, APELLIDO=? WHERE ID=?");
+            ps.setString(1, odontologo.getMatricula());
+            ps.setString(2, odontologo.getNombre());
+            ps.setString(3, odontologo.getApellido());
+            ps.execute();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        finally {
+            try{
+                connection.close();
+            }
+            catch (Exception exception){
+                exception.printStackTrace();
+            }
+            return odontologo;
+        }
     }
 
     @Override
@@ -140,7 +173,30 @@ public class OdontologoDAOH2 implements IDao<Odontologo> {
 
     @Override
     public Odontologo buscarXCriterioString(String criterio) {
-        return null;
+        Connection connection=null;
+        Odontologo odontologo=null;
+        try{
+            connection= BD.getConnection();
+            PreparedStatement ps= connection.prepareStatement("SELECT * FROM ODONTOLOGO WHERE APELLIDO=?");
+            ps.setString(1,criterio);
+            ResultSet rs= ps.executeQuery();
+            while (rs.next()){
+                odontologo =new Odontologo(rs.getInt(1),rs.getString(2),
+                        rs.getString(3),rs.getString(4));
+            }
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+        finally {
+            try{
+                connection.close();
+            }
+            catch (Exception exception){
+                exception.printStackTrace();
+            }
+        }
+        return odontologo;
     }
 
 }
