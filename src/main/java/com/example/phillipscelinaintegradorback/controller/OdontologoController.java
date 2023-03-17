@@ -4,6 +4,7 @@ import com.example.phillipscelinaintegradorback.domain.Odontologo;
 import com.example.phillipscelinaintegradorback.domain.Paciente;
 import com.example.phillipscelinaintegradorback.service.OdontologoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +39,13 @@ public class OdontologoController {
     }
 
     @GetMapping("/buscarTodos")
-    public List<Odontologo> buscarTodosOdontologos(){
-        return odontologoService.buscarTodosOdontologos();
+    public ResponseEntity<List<Odontologo>> buscarTodosOdontologos(){
+        return ResponseEntity.ok(odontologoService.buscarTodosOdontologos());
     }
+    @PostMapping
+    public ResponseEntity<Odontologo> agregarOdontologo(@RequestBody Odontologo odontologo){
+        return ResponseEntity.ok(odontologoService.guardarOdontologo(odontologo));
+    }
+
+
 }
