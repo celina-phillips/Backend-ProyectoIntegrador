@@ -1,43 +1,56 @@
 package com.example.phillipscelinaintegradorback.domain;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name="odontologos")
 public class Odontologo {
-
-    private int id;
-    private String matricula;
-    private String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
     private String apellido;
+    @Column
+    private String nombre;
+    @Column
+    private String matricula;
+    @OneToMany(mappedBy = "odontologo")
+    private Set<Turno> turnos= new HashSet<>();
 
-    public Odontologo(int id, String matricula, String nombre, String apellido) {
-        this.id = id;
-        this.matricula = matricula;
-        this.nombre = nombre;
+    public Odontologo(String apellido, String nombre, String matricula, Set<Turno> turnos) {
         this.apellido = apellido;
-
+        this.nombre = nombre;
+        this.matricula = matricula;
+        this.turnos = turnos;
     }
 
-    public Odontologo(String matricula, String nombre, String apellido) {
-        this.matricula = matricula;
-        this.nombre = nombre;
+    public Odontologo(Long id, String apellido, String nombre, String matricula, Set<Turno> turnos) {
+        this.id = id;
         this.apellido = apellido;
+        this.nombre = nombre;
+        this.matricula = matricula;
+        this.turnos = turnos;
     }
 
     public Odontologo() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getNombre() {
@@ -48,12 +61,11 @@ public class Odontologo {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 }
-

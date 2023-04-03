@@ -1,38 +1,43 @@
 package com.example.phillipscelinaintegradorback.service;
 
-import com.example.phillipscelinaintegradorback.dao.OdontologoDAOH2;
 import com.example.phillipscelinaintegradorback.domain.Odontologo;
 import com.example.phillipscelinaintegradorback.domain.Paciente;
+import com.example.phillipscelinaintegradorback.exceptions.ResourceNotFoundException;
+import com.example.phillipscelinaintegradorback.repository.OdontologoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OdontologoService {
-    private OdontologoDAOH2 odontologoDAOH2= new OdontologoDAOH2();
-
-    public Odontologo buscarOdontologo(int id){
-        return odontologoDAOH2.buscar(id);
+    private OdontologoRepository odontologoRepo;
+    @Autowired
+    public OdontologoService(OdontologoRepository odontologoRepo) {
+        this.odontologoRepo = odontologoRep;
     }
 
-    public List<Odontologo> buscarTodosOdontologos(){
-        return odontologoDAOH2.buscarTodos();
+    public Optional<Odontologo> buscarOdontologo(Long id){
+        return odontologoRepo.findById(id);
     }
-
-    public Odontologo buscarXApellido(String apellido){
-        return odontologoDAOH2.buscarXCriterioString(apellido);
+    public List<Odontologo> buscaTodosOdontologos(){
+        return odontologoRepo.findAll();
     }
-
     public Odontologo guardarOdontologo(Odontologo odontologo){
-        return odontologoDAOH2.guardar(odontologo);
+        return odontologoRepo.save(odontologo);
     }
-
-    public void eliminarOdontologo(int id){
-        odontologoDAOH2.eliminar(id);
+    public void eliminarOdontologo(Long id) throws ResourceNotFoundException {
+        Optional<Odontologo> odontologoBuscado= odontologoRepo.findById(id);
+        if (odontologoBuscado.isPresent()){
+            odontologoRepo.deleteById(id);
+        }
+        else {
+            throw new ResourceNotFoundException("Este odontologo no existe");
+        }
     }
-
-    public Odontologo actualizarOdontologo(Odontologo odontologo){
-
-        return odontologoDAOH2.actualizar(odontologo);
+    //agregando excepciones(sigo por aca)
+    public Odontologo actualizarOdontologo(Odontologo odontologo) {
+        return odontologoRepo.save(odontologo);
     }
 }

@@ -1,18 +1,34 @@
 package com.example.phillipscelinaintegradorback.domain;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "pacientes")
 public class Paciente {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
     private String apellido;
+    @Column
     private String nombre;
+    @Column
     private String documento;
+    @Column
     private LocalDate fechaIngreso;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "domicilio_id",referencedColumnName = "id")
     private Domicilio domicilio;
+
+    @OneToMany(mappedBy = "paciente",fetch = FetchType.LAZY)
+    private Set<Turno> turnos= new HashSet<>();
+    @Column
     private String email;
 
-    public Paciente(int id, String apellido, String nombre, String documento, LocalDate fechaIngreso, Domicilio domicilio, String email) {
-        this.id = id;
+    public Paciente(String apellido, String nombre, String documento, LocalDate fechaIngreso, Domicilio domicilio, String email) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.documento = documento;
@@ -21,12 +37,14 @@ public class Paciente {
         this.email = email;
     }
 
-    public Paciente(String apellido, String nombre, String documento, LocalDate fechaIngreso, Domicilio domicilio, String email) {
+    public Paciente(Long id, String apellido, String nombre, String documento, LocalDate fechaIngreso, Domicilio domicilio, Set<Turno> turnos, String email) {
+        this.id = id;
         this.apellido = apellido;
         this.nombre = nombre;
         this.documento = documento;
         this.fechaIngreso = fechaIngreso;
         this.domicilio = domicilio;
+        this.turnos = turnos;
         this.email = email;
     }
 
@@ -41,11 +59,11 @@ public class Paciente {
         this.email = email;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

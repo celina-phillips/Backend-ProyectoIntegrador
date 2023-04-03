@@ -1,21 +1,32 @@
 package com.example.phillipscelinaintegradorback.domain;
 
-public class Domicilio {
-    private int id;
-    private String calle;
-    private String numero;
-    private String localidad;
-    private String provincia;
+import javax.persistence.*;
 
-    public Domicilio(int id, String calle, String numero, String localidad, String provincia) {
-        this.id = id;
+@Entity
+@Table(name="domicilios")
+public class Domicilio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
+    private String calle;
+    @Column
+    private String numero;
+    @Column
+    private String localidad;
+    @Column
+    private String provincia;
+    //relaciones entre clases
+
+    public Domicilio(String calle, String numero, String localidad, String provincia) {
         this.calle = calle;
         this.numero = numero;
         this.localidad = localidad;
         this.provincia = provincia;
     }
 
-    public Domicilio(String calle, String numero, String localidad, String provincia) {
+    public Domicilio(Long id, String calle, String numero, String localidad, String provincia) {
+        this.id = id;
         this.calle = calle;
         this.numero = numero;
         this.localidad = localidad;
@@ -25,14 +36,13 @@ public class Domicilio {
     public Domicilio() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
-
     public String getCalle() {
         return calle;
     }
@@ -63,16 +73,5 @@ public class Domicilio {
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
-    }
-
-    @Override
-    public String toString() {
-        return "Domicilio{" +
-                "id=" + id +
-                ", calle='" + calle + '\'' +
-                ", numero='" + numero + '\'' +
-                ", localidad='" + localidad + '\'' +
-                ", provincia='" + provincia + '\'' +
-                '}';
     }
 }
