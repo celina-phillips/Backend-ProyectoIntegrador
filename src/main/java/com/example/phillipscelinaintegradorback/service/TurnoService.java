@@ -8,7 +8,7 @@ import com.example.phillipscelinaintegradorback.repository.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,5 +62,9 @@ public class TurnoService {
         turnoDTO.setNombre_paciente(turno.getPaciente().getNombre());
 
         return turnoDTO;
+    }
+
+    public List<Turno> listar() {
+        return turnoRepository.findAll();
     }
 }

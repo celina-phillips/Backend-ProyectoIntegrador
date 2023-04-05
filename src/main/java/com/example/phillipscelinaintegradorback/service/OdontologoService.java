@@ -15,7 +15,7 @@ public class OdontologoService {
     private OdontologoRepository odontologoRepo;
     @Autowired
     public OdontologoService(OdontologoRepository odontologoRepo) {
-        this.odontologoRepo = odontologoRep;
+        this.odontologoRepo = odontologoRepo;
     }
 
     public Optional<Odontologo> buscarOdontologo(Long id){

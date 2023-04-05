@@ -1,7 +1,8 @@
 window.addEventListener('load', function () {
 
 
-    const formulario = document.querySelector('#add_new_odontologo');
+    const formulario = document.querySelector('#add_new_paciente');
+
 
     formulario.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -9,12 +10,19 @@ window.addEventListener('load', function () {
         const formData = {
             apellido: document.querySelector('#apellido').value,
             nombre: document.querySelector('#nombre').value,
-            num_matricula: document.querySelector('#matricula').value,
+            documento: document.querySelector('#documento').value,
+            fechaIngreso: document.querySelector('#fecha_ingreso').value,
+            domicilio:
+                {id: "",
+                calle: document.querySelector('#calle').value,
+                numero: document.querySelector('#numero').value,
+                localidad: document.querySelector('#localidad').value,
+                provincia: document.querySelector('#provincia').value},
+            email: document.querySelector('#email').value,
         };
 
-        console.log(matricula);
 
-        const url = '/odontologos/guardar';
+        const url = '/pacientes/registrarPaciente';
         const settings = {
             method: 'POST',
             headers: {
@@ -29,7 +37,7 @@ window.addEventListener('load', function () {
 
                  let successAlert = '<div class="alert alert-success alert-dismissible">' +
                      '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                     '<strong></strong> Odontólogo agregado </div>'
+                     '<strong></strong> Paciente agregado </div>'
 
                  document.querySelector('#response').innerHTML = successAlert;
                  document.querySelector('#response').style.display = "block";
@@ -37,8 +45,7 @@ window.addEventListener('load', function () {
 
             })
             .catch(error => {
-                    //Si hay algún error se muestra un mensaje diciendo que el odontólogo
-                    //no se pudo guardar y se intente nuevamente
+
                     let errorAlert = '<div class="alert alert-danger alert-dismissible">' +
                                      '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                                      '<strong> Error intente nuevamente</strong> </div>'
@@ -51,9 +58,15 @@ window.addEventListener('load', function () {
 
 
     function resetUploadForm(){
-        document.querySelector('#apellido').value = "";
-        document.querySelector('#nombre').value = "";
-        document.querySelector('#matricula').value = "";
+            document.querySelector('#apellido').value="",
+            document.querySelector('#nombre').value="",
+            document.querySelector('#documento').value="",
+            document.querySelector('#fecha_ingreso').value="",
+            document.querySelector('#calle').value="",
+            document.querySelector('#numero').value="",
+            document.querySelector('#localidad').value="",
+            document.querySelector('#provincia').value="",
+            document.querySelector('#email').value="";
 
     }
 
@@ -61,7 +74,7 @@ window.addEventListener('load', function () {
         let pathname = window.location.pathname;
         if(pathname === "/"){
             document.querySelector(".nav .nav-item a:first").addClass("active");
-        } else if (pathname == "/listarOdontologo.html") {
+        } else if (pathname == "/listarPaciente.html") {
             document.querySelector(".nav .nav-item a:last").addClass("active");
         }
     })();

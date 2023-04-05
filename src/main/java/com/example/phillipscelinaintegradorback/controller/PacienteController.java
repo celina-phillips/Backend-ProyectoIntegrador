@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController {
@@ -23,6 +25,11 @@ public class PacienteController {
     public ResponseEntity<Paciente> buscarPaciente(@PathVariable Long id) {
         Paciente paciente = pacienteService.buscarPaciente(id).orElse(null);
         return ResponseEntity.ok(paciente);
+    }
+
+    @GetMapping("/todospacientes")
+    public ResponseEntity<List<Paciente>> todosPacientes(){
+        return ResponseEntity.ok(pacienteService.buscarTodosPacientes());
     }
 
     @PutMapping("/actualizarPaciente")
@@ -43,4 +50,5 @@ public class PacienteController {
         pacienteService.eliminarPaciente(id);
         return ResponseEntity.ok("Se eliminó el paciente correctamente");
     }
+
 }

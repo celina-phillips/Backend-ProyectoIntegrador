@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Alta odontologos</title>
+    <title>Listando Turnos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="js/postOdontologo.js"></script>
+    <script type="text/javascript" src="/js/get_turno.js"></script>
+    <script type="text/javascript" src="/js/update_turno.js"></script>
+    <script type="text/javascript" src="/js/delete_turno.js"></script>
 </head>
 <body>
-
+<div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Proyecto Integrador</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,7 +33,8 @@
                         <a class="dropdown-item" href="/altaOdontologo.html">Alta odontologo</a>
                         <a class="dropdown-item" href="/listarOdontologo.html">Listar odontologo</a>
                     </div>
-                </li><li class="nav-item dropdown">
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Pacientes
                     </a>
@@ -54,38 +56,51 @@
         </div>
     </nav>
 
-<div class="row">
-    <div class="col-sm-7" >
-        <h3>Agregar odontologo</h3>
-        <form id="add_new_odontologo">
-            <div class="form-group">
-                <label class="control-label" for="apellido">Apellido:</label>
-                <input type="text" class="form-control" id="apellido"
-                       placeholder="Ingrese el apellido"
-                       name="apellido" required></input>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre"
-                       placeholder="Ingrese el nombre"
-                       name="nombre" required></input>
-            </div>
-
-
-            <div class="form-group">
-                <label class="control-label" for="matricula">Matricula:</label>
-                <input type="text" class="form-control" id="matricula"
-                       placeholder="Ingrese la matricula"
-                       name="matricula" required></input>
-            </div>
-
-            <button type="submit" class="btn btn-success"
-                    id="btn-add-new-odontologo">Guardar</button>
-        </form>
-        <div id="response" style="display:none; margin-top:10px">
+    <div id="div_turno_table">
+        <h1>Turno</h1>
+        <div class="row col-md-6 table-responsive">
+            <table id="turnoTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Paciente</th>
+                    <th>Odontólogo</th>
+                    <th>Fecha</th>
+                </tr>
+                </thead>
+                <tbody id="turnoTableBody">
+                </tbody>
+            </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-6" style="display: none;
+			background-color:#e6fffa; padding:10px; border-radius:3px"
+             id="div_turno_updating">
+            <form id="update_turno_form">
+                <div class="form-group">
+                    <label >Id:</label>
+                    <input type="text" class="form-control" id="turno_id" readonly>
+                </div>
+                <div class="form-group">
+                    <label >Paciente:</label>
+                    <input type="text" class="form-control" placeholder="paciente" id="paciente">
+                </div>
+                <div class="form-group">
+                    <label >Odontólogo:</label>
+                    <input type="text" class="form-control" placeholder="odontologo" id="odontologo">
+                </div>
+                <div class="form-group">
+                    <label >Fecha:</label>
+                    <input type="text" class="form-control" placeholder="fecha" id="fecha">
+                </div>
+                <button type="submit" class="btn btn-primary">Modificar</button>
+            </form>
+            <div id="response" style="display:none; margin:10px">
+            </div>
+        </div>
+    </div>
+    <hr>
 </div>
-
 </body>
 </html>

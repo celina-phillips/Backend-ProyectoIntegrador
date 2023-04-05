@@ -20,9 +20,10 @@ public class PacienteService {
     public List<Paciente> buscarTodosPacientes(){
         return pacienteRepo.findAll();
     }
-    public Optional<Paciente> buscarXEmail(String email){
-        return pacienteRepo.findByEmail(email);
-    }
+
+    //public Optional<Paciente> buscarXEmail(String email){
+        //return pacienteRepo.findByEmail(email);
+    //}
     public Paciente guardarPaciente(Paciente paciente){
         return pacienteRepo.save(paciente);
     }

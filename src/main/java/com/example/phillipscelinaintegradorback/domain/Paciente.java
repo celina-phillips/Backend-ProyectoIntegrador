@@ -2,6 +2,7 @@ package com.example.phillipscelinaintegradorback.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,6 +50,9 @@ public class Paciente {
     }
 
     public Paciente() {
+    }
+
+    public Paciente(String phillips, String celina, String documento, Date date, Domicilio domicilio, String email) {
     }
 
     public String getEmail() {
